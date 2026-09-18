@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#050816">
+<meta name="description" content="Ultra Neon Resume Gallery with A4 print">
+<link rel="manifest" href="manifest.json">
+<title>Ultra Neon Resume Gallery</title>
+<style>
+:root{--cyan:#00f6ff;--pink:#ff00d4;--purple:#8b5cf6;--bg:#050816}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:#eafcff;background:radial-gradient(circle at 10% 10%,#102b55 0,transparent 35%),radial-gradient(circle at 90% 20%,#401044 0,transparent 35%),#050816;padding:26px 16px}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(0,246,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,0,212,.025) 1px,transparent 1px);background-size:28px 28px}
+.top-bar{max-width:1100px;margin:0 auto 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:23px;font-weight:900;text-shadow:0 0 12px var(--cyan),0 0 22px var(--pink)}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+.btn{padding:10px 15px;border:1px solid var(--cyan);border-radius:11px;color:#fff;background:#081326;text-decoration:none;font-weight:800;cursor:pointer;box-shadow:0 0 12px rgba(0,246,255,.22)}
+.btn-danger{border-color:#ff3b81;background:#351024}
+.users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:20px;max-width:1100px;margin:auto}
+.user-card{position:relative;background:rgba(8,15,35,.9);border:1px solid rgba(0,246,255,.35);border-radius:18px;padding:20px;text-align:center;cursor:pointer;box-shadow:0 0 18px rgba(0,246,255,.08);transition:.2s}
+.user-card:hover{transform:translateY(-5px);border-color:var(--cyan);box-shadow:0 0 24px rgba(0,246,255,.25)}
+.user-card-img{width:100px;height:120px;object-fit:cover;border-radius:8px;border:1px solid var(--cyan);margin:auto;display:block;background:#fff}
+.user-card-name{font-size:17px;font-weight:900;margin:12px 0 4px}
+.user-card-sub{font-size:13px;color:#9cc8d0;margin-bottom:12px}
+.view{color:#7ffaff;font-size:13px;font-weight:800}
+.delete-btn-icon{position:absolute;top:10px;right:10px;width:30px;height:30px;border:1px solid #ff3b81;border-radius:50%;background:#3b1025;color:#fff;cursor:pointer}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);z-index:999;overflow-y:auto;padding:18px 0}
+.modal-action-bar{width:210mm;max-width:calc(100% - 20px);margin:0 auto 12px;display:flex;justify-content:space-between;gap:10px}
+.resume-card{width:210mm;min-height:297mm;background:#fff!important;color:#111;padding:45px 50px;margin:0 auto;box-sizing:border-box;font-family:Georgia,"Times New Roman",serif;box-shadow:0 0 35px rgba(0,246,255,.25)}
+.resume-title{text-align:center;font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:25px;padding-bottom:8px;border-bottom:2px solid #000}
+.header-section{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.header-info{width:78%;font-size:14px;line-height:1.6} .header-info p{margin:3px 0}
+.photo-box{width:105px;height:125px;border:1px solid #333;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fafafa}
+.photo-box img{width:100%;height:100%;object-fit:cover}
+.section-title{font-size:15px;font-weight:bold;text-transform:uppercase;margin-top:18px;margin-bottom:8px;border-bottom:1px solid #333;padding-bottom:3px}
+.objective-text{font-size:13.5px;line-height:1.5;margin-top:6px;text-align:justify}
+.resume-ul{margin:6px 0 10px;padding-left:20px} .resume-ul li{margin-bottom:4px;font-size:13.5px;line-height:1.4}
+.details-table{width:100%;font-size:13.5px;margin-top:8px;border-collapse:collapse} .details-table td{padding:4px 0;vertical-align:top;line-height:1.4} .details-table td:first-child{width:180px;font-weight:bold}
+@media(max-width:650px){.resume-card{width:100%;min-height:auto;padding:30px 22px}.modal-action-bar{width:100%;padding:0 10px}}
+@media print{@page{size:A4;margin:0}body{background:#fff!important;padding:0!important;margin:0!important}.top-bar,.users-grid,.modal-action-bar{display:none!important}.modal-overlay{position:static!important;background:none!important;padding:0!important;display:block!important;overflow:visible!important}.resume-card{box-shadow:none!important;margin:0!important;width:100%!important;min-height:auto!important;padding:40px 45px!important;border:none!important;background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBBrVgaXd6R7_URz3FzX5oTA3mcLyFC_Ew",
+    authDomain: "resume-38506.firebaseapp.com",
+    projectId: "resume-38506",
+    storageBucket: "resume-38506.firebasestorage.app",
+    messagingSenderId: "979584346197",
+    appId: "1:979584346197:web:d3c494981cfaea9e394cdc",
+    measurementId: "G-9DQFN3K84S"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  try { getAnalytics(app); } catch (e) { console.warn("Firebase Analytics unavailable:", e); }
+</script>
+
+</head>
+<body>
+<div class="top-bar">
+<div class="logo">⚡ ULTRA NEON RESUME GALLERY</div>
+<div class="actions">
+<a class="btn" href="input.html">＋ Add Resume</a>
+<button class="btn" onclick="clearAllData()">🗑 Clear All</button>
+<button class="btn install-btn" hidden id="installBtn" onclick="installPWA()">📲 Install App</button>
+</div></div>
+<div class="users-grid" id="usersGrid"></div>
+<div class="modal-overlay" id="resumeModal">
+<div class="modal-action-bar"><button class="btn" onclick="window.print()">🖨️ Print A4</button><button class="btn" onclick="closeModal()">✖ Close</button></div>
+<div id="modalResumeContent"></div>
+</div>
+<script>
+const defaultObjectiveText="To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process and looking for a dynamic and vibrant work.";
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function parseListItems(v){if(!v)return"";const a=Array.isArray(v)?v:[v];return a.flatMap(x=>String(x).split(/[.,]/)).map(x=>x.trim()).filter(Boolean).map(x=>`<li>${esc(x)}.</li>`).join("")}
+function renderUserGrid(){
+ const grid=document.getElementById("usersGrid"),resumes=JSON.parse(localStorage.getItem("resumesList")||"[]");
+ if(!resumes.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:45px">No Resume Data Found. <a class="view" href="input.html">Add New Resume</a></div>';return}
+ grid.innerHTML="";
+ resumes.forEach((d,i)=>{
+  const card=document.createElement("div");card.className="user-card";
+  const photo=d.photo||"https://via.placeholder.com/100x120?text=NO+PHOTO";
+  card.innerHTML=`<button class="delete-btn-icon" title="Delete" onclick="deleteResume(event,${i})">✕</button><img src="${photo}" class="user-card-img" alt="Profile"><div class="user-card-name">${esc(d.name||"Unnamed User")}</div><div class="user-card-sub">${esc(d.mobile||"No Mobile")}</div><div class="view">CLICK TO VIEW A4 RESUME 📄</div>`;
+  card.onclick=e=>{if(!e.target.classList.contains("delete-btn-icon"))openResumeModal(i)};grid.appendChild(card);
+ });
+}
+function openResumeModal(i){
+ const d=(JSON.parse(localStorage.getItem("resumesList")||"[]"))[i];if(!d)return;
+ const photo=d.photo?`<img src="${d.photo}" alt="Photo">`:'<span style="font-size:10px;color:#777">PASSPORT PHOTO</span>';
+ const sec=(title,list)=>list?`<div class="section-title">${title}</div><ul class="resume-ul">${parseListItems(list)}</ul>`:"";
+ document.getElementById("modalResumeContent").innerHTML=`<div class="resume-card">
+ <div class="resume-title">RESUME</div><div class="header-section"><div class="header-info">
+ <p><strong>Name :</strong> ${esc(d.name)}</p><p><strong>Address :</strong> ${esc(d.address)}</p><p><strong>Mobile No :</strong> ${esc(d.mobile)}</p>${d.email?`<p><strong>Email ID :</strong> ${esc(d.email)}</p>`:""}</div><div class="photo-box">${photo}</div></div>
+ <div class="section-title">Objective :-</div><div class="objective-text">${esc(d.objective||defaultObjectiveText)}</div>
+ ${sec("Education Qualification :-",d.education)}${sec("Technical Qualification :-",d.technical)}${sec("Key Skills & Capabilities :-",d.skills)}${sec("Projects / Certifications :-",d.projects)}${sec("Work Experience :-",d.experience)}
+ <div class="section-title">Personal Details :-</div><table class="details-table">
+ <tr><td>Father’s Name :-</td><td>${esc(d.fatherName)}</td></tr><tr><td>Mother’s Name :-</td><td>${esc(d.motherName)}</td></tr><tr><td>Date of Birth :-</td><td>${esc(d.dob)}</td></tr>
+ ${d.gender?`<tr><td>Gender :-</td><td>${esc(d.gender)}</td></tr>`:""}<tr><td>Marital Status :-</td><td>${esc(d.maritalStatus)}</td></tr><tr><td>Religion :-</td><td>${esc(d.religion)}</td></tr><tr><td>Nationality :-</td><td>${esc(d.nationality)}</td></tr><tr><td>Language Known :-</td><td>${esc(d.languages)}</td></tr><tr><td>Interest :-</td><td>${esc(d.interest)}</td></tr></table></div>`;
+ document.getElementById("resumeModal").style.display="block";document.body.style.overflow="hidden";
+}
+function closeModal(){document.getElementById("resumeModal").style.display="none";document.body.style.overflow="auto"}
+function deleteResume(e,i){e.stopPropagation();if(confirm("Kya aap is resume ko delete karna chahte hain?")){let a=JSON.parse(localStorage.getItem("resumesList")||"[]");a.splice(i,1);localStorage.setItem("resumesList",JSON.stringify(a));renderUserGrid()}}
+function clearAllData(){if(confirm("Kya aap saara resume data delete karna chahte hain?")){localStorage.removeItem("resumesList");renderUserGrid()}}
+window.onload=renderUserGrid;
+</script>
+
+<script>
+let deferredPrompt = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.querySelectorAll(".install-btn").forEach(b => b.hidden = false);
+});
+async function installPWA() {
+  if (!deferredPrompt) {
+    alert("Install option browser ke menu (⋮) me 'Install app' / 'Add to Home screen' ke naam se mil sakta hai.");
+    return;
+  }
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  document.querySelectorAll(".install-btn").forEach(b => b.hidden = true);
+}
+window.addEventListener("appinstalled", () => {
+  document.querySelectorAll(".install-btn").forEach(b => b.hidden = true);
+});
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(console.warn));
+}
+</script>
+
+</body>
+</html>
