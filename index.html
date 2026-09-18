@@ -190,6 +190,27 @@ textarea{min-height:90px;resize:vertical}
 
   const defaultObj = "To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process.";
 
+  // Image size chhota karne ke liye Canvas compression function
+  function compressImage(file, maxWidth = 300, quality = 0.7) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const scale = maxWidth / img.width;
+          canvas.width = maxWidth;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL("image/jpeg", quality));
+        };
+      };
+    });
+  }
+
   document.getElementById("resumeForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -222,13 +243,20 @@ textarea{min-height:90px;resize:vertical}
     btn.disabled = true;
     btn.innerText = "⏳ Uploading to Server...";
 
-    const fileInput = document.getElementById("photoInput");
-    if(fileInput.files && fileInput.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (x) => uploadToFirebase(x.target.result);
-      reader.readAsDataURL(fileInput.files[0]);
-    } else {
-      uploadToFirebase("");
+    try {
+      const fileInput = document.getElementById("photoInput");
+      let photoBase64 = "";
+      
+      if(fileInput.files && fileInput.files[0]) {
+        photoBase64 = await compressImage(fileInput.files[0]);
+      }
+
+      await uploadToFirebase(photoBase64);
+    } catch(err) {
+      console.error("Upload Error:", err);
+      alert("❌ Submit Failed: " + err.message);
+      btn.disabled = false;
+      btn.innerText = "⚡ SAVE & UPLOAD TO SERVER";
     }
   });
 
@@ -266,16 +294,10 @@ textarea{min-height:90px;resize:vertical}
       createdAt: new Date().toISOString()
     };
 
-    try {
-      await addDoc(collection(db, "resumes"), payload);
-      alert("✅ Resume Server Par Upload Ho Gaya!");
-      window.location.href = "data.html";
-    } catch(err) {
-      console.error("Firebase Storage Error:", err);
-      alert("❌ Server Upload Failed: " + err.message);
-      document.getElementById("submitBtn").disabled = false;
-      document.getElementById("submitBtn").innerText = "⚡ SAVE & UPLOAD TO SERVER";
-    }
+    await addDoc(collection(db, "resumes"), payload);
+    
+    alert("✅ Resume Server Par Upload Ho Gaya!");
+    window.location.href = "data.html";
   }
 </script>
 </body>
