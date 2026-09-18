@@ -2,32 +2,44 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#050816">
-<meta name="description" content="Ultra Neon Resume Builder - A4 Resume">
+<meta name="description" content="Ultra Neon Resume Gallery with A4 print">
 <link rel="manifest" href="manifest.json">
-<title>Ultra Neon Resume Builder</title>
+<title>Ultra Neon Resume Gallery</title>
 <style>
-:root{--cyan:#00f6ff;--pink:#ff00d4;--purple:#8b5cf6;--bg:#050816;--panel:rgba(10,15,35,.86);--text:#eafcff}
+:root{--cyan:#00f6ff;--pink:#ff00d4;--purple:#8b5cf6;--bg:#050816}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 10% 10%,#102b55 0,transparent 35%),radial-gradient(circle at 90% 20%,#401044 0,transparent 35%),#050816;padding:28px 16px}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:#eafcff;background:radial-gradient(circle at 10% 10%,#102b55 0,transparent 35%),radial-gradient(circle at 90% 20%,#401044 0,transparent 35%),#050816;padding:26px 16px}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(0,246,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,0,212,.025) 1px,transparent 1px);background-size:28px 28px}
-.top{max-width:900px;margin:0 auto 20px;display:flex;justify-content:space-between;gap:12px;align-items:center}
-.logo{font-size:22px;font-weight:900;letter-spacing:1px;text-shadow:0 0 12px var(--cyan),0 0 24px var(--pink)}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-.btn{border:1px solid var(--cyan);color:white;background:linear-gradient(135deg,#09243a,#17113d);padding:11px 16px;border-radius:12px;font-weight:800;cursor:pointer;box-shadow:0 0 10px rgba(0,246,255,.25);text-decoration:none}
-.btn:hover{box-shadow:0 0 18px rgba(0,246,255,.55);transform:translateY(-1px)}
-.form-container{max-width:900px;margin:auto;background:var(--panel);border:1px solid rgba(0,246,255,.45);border-radius:22px;padding:30px;box-shadow:0 0 25px rgba(0,246,255,.12),0 0 55px rgba(255,0,212,.08);backdrop-filter:blur(14px)}
-h2{margin:0 0 24px;text-align:center;font-size:28px;text-transform:uppercase;letter-spacing:2px;text-shadow:0 0 10px var(--cyan)}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.full{grid-column:1/-1}
-label{display:block;margin:0 0 7px;font-size:13px;font-weight:800;color:#bafaff}
-input,textarea,select{width:100%;border:1px solid #244a68;border-radius:11px;background:#071020;color:white;padding:12px;font-size:14px;outline:none}
-input:focus,textarea:focus,select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,246,255,.12),0 0 14px rgba(0,246,255,.22)}
-textarea{min-height:90px;resize:vertical}
-.submit{width:100%;margin-top:22px;padding:15px;border:1px solid var(--cyan);border-radius:13px;background:linear-gradient(90deg,#00a8b3,#7b00ff,#d0009c);color:#fff;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 0 18px rgba(0,246,255,.3)}
-.nav{display:block;text-align:center;margin-top:16px;color:#8ffaff;font-weight:800}
-@media(max-width:650px){.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.top{align-items:flex-start;flex-direction:column}}
+.top-bar{max-width:1100px;margin:0 auto 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:23px;font-weight:900;text-shadow:0 0 12px var(--cyan),0 0 22px var(--pink)}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+.btn{padding:10px 15px;border:1px solid var(--cyan);border-radius:11px;color:#fff;background:#081326;text-decoration:none;font-weight:800;cursor:pointer;box-shadow:0 0 12px rgba(0,246,255,.22)}
+.btn-danger{border-color:#ff3b81;background:#351024}
+.users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:20px;max-width:1100px;margin:auto}
+.user-card{position:relative;background:rgba(8,15,35,.9);border:1px solid rgba(0,246,255,.35);border-radius:18px;padding:20px;text-align:center;cursor:pointer;box-shadow:0 0 18px rgba(0,246,255,.08);transition:.2s}
+.user-card:hover{transform:translateY(-5px);border-color:var(--cyan);box-shadow:0 0 24px rgba(0,246,255,.25)}
+.user-card-img{width:100px;height:120px;object-fit:cover;border-radius:8px;border:1px solid var(--cyan);margin:auto;display:block;background:#fff}
+.user-card-name{font-size:17px;font-weight:900;margin:12px 0 4px}
+.user-card-sub{font-size:13px;color:#9cc8d0;margin-bottom:12px}
+.view{color:#7ffaff;font-size:13px;font-weight:800}
+.delete-btn-icon{position:absolute;top:10px;right:10px;width:30px;height:30px;border:1px solid #ff3b81;border-radius:50%;background:#3b1025;color:#fff;cursor:pointer}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);z-index:999;overflow-y:auto;padding:18px 0}
+.modal-action-bar{width:210mm;max-width:calc(100% - 20px);margin:0 auto 12px;display:flex;justify-content:space-between;gap:10px}
+.resume-card{width:210mm;min-height:297mm;background:#fff!important;color:#111;padding:45px 50px;margin:0 auto;box-sizing:border-box;font-family:Georgia,"Times New Roman",serif;box-shadow:0 0 35px rgba(0,246,255,.25)}
+.resume-title{text-align:center;font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:25px;padding-bottom:8px;border-bottom:2px solid #000}
+.header-section{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.header-info{width:78%;font-size:14px;line-height:1.6} .header-info p{margin:3px 0}
+.photo-box{width:105px;height:125px;border:1px solid #333;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fafafa}
+.photo-box img{width:100%;height:100%;object-fit:cover}
+.section-title{font-size:15px;font-weight:bold;text-transform:uppercase;margin-top:18px;margin-bottom:8px;border-bottom:1px solid #333;padding-bottom:3px}
+.objective-text{font-size:13.5px;line-height:1.5;margin-top:6px;text-align:justify}
+.resume-ul{margin:6px 0 10px;padding-left:20px} .resume-ul li{margin-bottom:4px;font-size:13.5px;line-height:1.4}
+.details-table{width:100%;font-size:13.5px;margin-top:8px;border-collapse:collapse} .details-table td{padding:4px 0;vertical-align:top;line-height:1.4} .details-table td:first-child{width:180px;font-weight:bold}
+.delete-dialog{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(12px)}.delete-panel{width:min(440px,100%);background:linear-gradient(145deg,#0b1329,#160b22);border:1px solid rgba(0,246,255,.5);border-radius:24px;padding:28px;position:relative;text-align:center;box-shadow:0 0 35px rgba(0,246,255,.18),0 0 55px rgba(255,0,212,.12)}.dialog-close{position:absolute;right:13px;top:13px;width:34px;height:34px;border-radius:50%;border:1px solid #35516b;background:#071020;color:#fff;font-size:20px;cursor:pointer}.danger-icon{width:62px;height:62px;margin:0 auto 12px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:rgba(255,59,129,.12);border:1px solid rgba(255,59,129,.5);font-size:28px}.dialog-title{font-size:23px;font-weight:900;text-shadow:0 0 10px var(--cyan);margin-bottom:7px}.dialog-message{font-size:13px;color:#b9d6dc;line-height:1.5;margin-bottom:19px}.verify-box{text-align:left;padding:15px;border-radius:16px;border:1px solid rgba(0,246,255,.25);background:rgba(2,8,22,.62)}.password-wrap{display:flex;gap:7px}.password-wrap input{flex:1}.password-wrap button{width:47px;border:1px solid #244a68;border-radius:11px;background:#071020;color:#fff;cursor:pointer}.verify-hint{font-size:11px;color:#7faeb8;margin-top:8px}.delete-error{min-height:22px;padding-top:8px;color:#ff7da8;font-size:12px;font-weight:800}.dialog-actions{display:flex;gap:10px;margin-top:6px}.dialog-actions .btn{flex:1}.cancel-delete{border-color:#496173;background:#101a2b}.confirm-delete{border-color:#ff3b81;background:linear-gradient(135deg,#4a102b,#741044);box-shadow:0 0 14px rgba(255,59,129,.22)}
+@media(max-width:650px){.resume-card{width:100%;min-height:auto;padding:30px 22px}.modal-action-bar{width:100%;padding:0 10px}}
+@media print{@page{size:A4;margin:0}body{background:#fff!important;padding:0!important;margin:0!important}.top-bar,.users-grid,.modal-action-bar{display:none!important}.modal-overlay{position:static!important;background:none!important;padding:0!important;display:block!important;overflow:visible!important}.resume-card{box-shadow:none!important;margin:0!important;width:100%!important;min-height:auto!important;padding:40px 45px!important;border:none!important;background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 
 <script type="module">
@@ -50,57 +62,73 @@ textarea{min-height:90px;resize:vertical}
 
 </head>
 <body>
-<div class="top">
-  <div class="logo">⚡ ULTRA NEON RESUME</div>
-  <div class="actions"><button class="btn install-btn" hidden onclick="installPWA()">📲 Install App</button><a class="btn" href="data.html">📄 View Resumes</a></div>
-</div>
-<div class="form-container">
-<h2>Resume Data Input</h2>
-<form id="resumeForm">
-<div class="form-grid">
-<div class="full"><label>Full Name</label><input id="name" required placeholder="e.g. Harshit Kumar"></div>
-<div class="full"><label>Address</label><input id="address" required placeholder="Full address"></div>
-<div><label>Mobile No</label><input id="mobile" required placeholder="9129191898"></div>
-<div><label>Email ID</label><input id="email" type="email" placeholder="name@example.com"></div>
-<div class="full"><label>Profile Photo</label><input id="photoInput" type="file" accept="image/*"></div>
-<div class="full"><label>Objective</label><textarea id="objective">To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process and looking for a dynamic and vibrant work.</textarea></div>
-<div class="full"><label>Education Qualification (comma separated)</label><textarea id="education" placeholder="10th passed from UP Board, 12th passed from UP Board"></textarea></div>
-<div class="full"><label>Technical Qualification (comma separated)</label><textarea id="technical" placeholder="Advance Diploma in Computer Application, Tally Prime, O Level"></textarea></div>
-<div class="full"><label>Key Skills (comma separated)</label><textarea id="skills" placeholder="HTML, CSS, JavaScript, Accounting"></textarea></div>
-<div class="full"><label>Projects / Certifications (comma separated)</label><textarea id="projects" placeholder="NIELIT O Level Certification, Web Development"></textarea></div>
-<div class="full"><label>Work Experience (comma separated)</label><textarea id="experience" placeholder="1 year in GST Office"></textarea></div>
-<div><label>Father's Name</label><input id="fatherName"></div>
-<div><label>Mother's Name</label><input id="motherName"></div>
-<div><label>Date of Birth</label><input id="dob" placeholder="13/sep/2006"></div>
-<div><label>Gender</label><select id="gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
-<div><label>Marital Status</label><input id="maritalStatus" placeholder="un-married"></div>
-<div><label>Religion</label><input id="religion"></div>
-<div><label>Nationality</label><input id="nationality" value="Indian"></div>
-<div><label>Languages Known</label><input id="languages" placeholder="Hindi, English"></div>
-<div class="full"><label>Interest / Hobbies</label><input id="interest" placeholder="Teaching, Reading Books, Accounting"></div>
-</div>
-<button class="submit" type="submit">⚡ SAVE RESUME</button>
-</form>
-<a class="nav" href="data.html">Open Resume Gallery →</a>
+<div class="top-bar">
+<div class="logo">⚡ ULTRA NEON RESUME GALLERY</div>
+<div class="actions">
+<a class="btn" href="input.html">＋ Add Resume</a>
+<button class="btn" onclick="clearAllData()">🗑 Clear All</button>
+<button class="btn install-btn" hidden id="installBtn" onclick="installPWA()">📲 Install App</button>
+</div></div>
+<div class="users-grid" id="usersGrid"></div>
+<div class="modal-overlay" id="resumeModal">
+<div class="modal-action-bar"><button class="btn" onclick="window.print()">🖨️ Print A4</button><button class="btn" onclick="closeModal()">✖ Close</button></div>
+<div id="modalResumeContent"></div>
 </div>
 <script>
 const defaultObjectiveText="To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process and looking for a dynamic and vibrant work.";
-document.getElementById("resumeForm").addEventListener("submit",e=>{
- e.preventDefault();
- const f=document.getElementById("photoInput");
- if(f.files&&f.files[0]){const r=new FileReader();r.onload=x=>saveData(x.target.result);r.readAsDataURL(f.files[0]);}
- else saveData("");
-});
-function saveData(photo){
- const objective=document.getElementById("objective").value.trim()||defaultObjectiveText;
- const arr=id=>document.getElementById(id).value.split(",").map(x=>x.trim()).filter(Boolean);
- const data={id:Date.now(),name:name.value,address:address.value,mobile:mobile.value,email:email.value,photo,objective,
- education:arr("education"),technical:arr("technical"),skills:arr("skills"),projects:arr("projects"),experience:arr("experience"),
- fatherName:fatherName.value,motherName:motherName.value,dob:dob.value,gender:gender.value,maritalStatus:maritalStatus.value,
- religion:religion.value,nationality:nationality.value,languages:languages.value,interest:interest.value};
- const list=JSON.parse(localStorage.getItem("resumesList")||"[]");list.push(data);localStorage.setItem("resumesList",JSON.stringify(list));
- alert("Resume saved successfully!");location.href="data.html";
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function parseListItems(v){if(!v)return"";const a=Array.isArray(v)?v:[v];return a.flatMap(x=>String(x).split(/[.,]/)).map(x=>x.trim()).filter(Boolean).map(x=>`<li>${esc(x)}.</li>`).join("")}
+function renderUserGrid(){
+ const grid=document.getElementById("usersGrid"),resumes=JSON.parse(localStorage.getItem("resumesList")||"[]");
+ if(!resumes.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:45px">No Resume Data Found. <a class="view" href="input.html">Add New Resume</a></div>';return}
+ grid.innerHTML="";
+ resumes.forEach((d,i)=>{
+  const card=document.createElement("div");card.className="user-card";
+  const photo=d.photo||"https://via.placeholder.com/100x120?text=NO+PHOTO";
+  card.innerHTML=`<button class="delete-btn-icon" title="Delete" onclick="deleteResume(event,${i})">✕</button><img src="${photo}" class="user-card-img" alt="Profile"><div class="user-card-name">${esc(d.name||"Unnamed User")}</div><div class="user-card-sub">${esc(d.mobile||"No Mobile")}</div><div class="view">CLICK TO VIEW A4 RESUME 📄</div>`;
+  card.onclick=e=>{if(!e.target.classList.contains("delete-btn-icon"))openResumeModal(i)};grid.appendChild(card);
+ });
 }
+function openResumeModal(i){
+ const d=(JSON.parse(localStorage.getItem("resumesList")||"[]"))[i];if(!d)return;
+ const photo=d.photo?`<img src="${d.photo}" alt="Photo">`:'<span style="font-size:10px;color:#777">PASSPORT PHOTO</span>';
+ const sec=(title,list)=>list?`<div class="section-title">${title}</div><ul class="resume-ul">${parseListItems(list)}</ul>`:"";
+ document.getElementById("modalResumeContent").innerHTML=`<div class="resume-card">
+ <div class="resume-title">RESUME</div><div class="header-section"><div class="header-info">
+ <p><strong>Name :</strong> ${esc(d.name)}</p><p><strong>Address :</strong> ${esc(d.address)}</p><p><strong>Mobile No :</strong> ${esc(d.mobile)}</p>${d.email?`<p><strong>Email ID :</strong> ${esc(d.email)}</p>`:""}</div><div class="photo-box">${photo}</div></div>
+ <div class="section-title">Objective :-</div><div class="objective-text">${esc(d.objective||defaultObjectiveText)}</div>
+ ${sec("Education Qualification :-",d.education)}${sec("Technical Qualification :-",d.technical)}${sec("Key Skills & Capabilities :-",d.skills)}${sec("Projects / Certifications :-",d.projects)}${sec("Work Experience :-",d.experience)}
+ <div class="section-title">Personal Details :-</div><table class="details-table">
+ <tr><td>Father’s Name :-</td><td>${esc(d.fatherName)}</td></tr><tr><td>Mother’s Name :-</td><td>${esc(d.motherName)}</td></tr><tr><td>Date of Birth :-</td><td>${esc(d.dob)}</td></tr>
+ ${d.gender?`<tr><td>Gender :-</td><td>${esc(d.gender)}</td></tr>`:""}<tr><td>Marital Status :-</td><td>${esc(d.maritalStatus)}</td></tr><tr><td>Religion :-</td><td>${esc(d.religion)}</td></tr><tr><td>Nationality :-</td><td>${esc(d.nationality)}</td></tr><tr><td>Language Known :-</td><td>${esc(d.languages)}</td></tr><tr><td>Interest :-</td><td>${esc(d.interest)}</td></tr></table></div>`;
+ document.getElementById("resumeModal").style.display="block";document.body.style.overflow="hidden";
+}
+function closeModal(){document.getElementById("resumeModal").style.display="none";document.body.style.overflow="auto"}
+function deleteResume(e,i){
+ e.stopPropagation();
+ let a=JSON.parse(localStorage.getItem("resumesList")||"[]"),d=a[i]; if(!d)return;
+ showDeleteDialog("Delete Resume","Is resume ko delete karne ke liye Date of Birth verify karein.",d.dob,function(){a.splice(i,1);localStorage.setItem("resumesList",JSON.stringify(a));renderUserGrid()});
+}
+function clearAllData(){
+ let a=JSON.parse(localStorage.getItem("resumesList")||"[]"); if(!a.length){alert("Delete karne ke liye koi resume nahi hai.");return;}
+ showDeleteDialog("Delete All Resumes","Saare resumes delete karne ke liye kisi bhi saved resume ki Date of Birth verify karein.",null,function(){localStorage.removeItem("resumesList");renderUserGrid()});
+}
+function normalizeDob(v){return String(v||"").trim().toLowerCase().replace(/\s+/g,"").replace(/[-.]/g,"/");}
+function showDeleteDialog(title,message,expectedDob,onConfirm){
+ const old=document.getElementById("deleteDialog");if(old)old.remove();
+ const box=document.createElement("div");box.id="deleteDialog";box.className="delete-dialog";
+ box.innerHTML=`<div class="delete-panel"><button class="dialog-close" type="button">×</button><div class="danger-icon">🛡️</div><div class="dialog-title">${esc(title)}</div><div class="dialog-message">${esc(message)}</div><div class="verify-box"><label for="dobVerify">Date of Birth</label><div class="password-wrap"><input id="dobVerify" type="password" inputmode="numeric" autocomplete="off" placeholder="DD/MM/YYYY"><button id="toggleDob" type="button">👁</button></div><div class="verify-hint">DOB ko password ki tarah enter karein.</div></div><div id="deleteError" class="delete-error"></div><div class="dialog-actions"><button class="btn cancel-delete" type="button">Cancel</button><button class="btn confirm-delete" type="button">🗑 Delete</button></div></div>`;
+ document.body.appendChild(box);const input=box.querySelector("#dobVerify"),error=box.querySelector("#deleteError"),close=()=>box.remove();
+ box.querySelector(".dialog-close").onclick=close;box.querySelector(".cancel-delete").onclick=close;box.querySelector("#toggleDob").onclick=()=>input.type=input.type==="password"?"text":"password";
+ box.addEventListener("click",ev=>{if(ev.target===box)close()});
+ box.querySelector(".confirm-delete").onclick=()=>{
+   const entered=normalizeDob(input.value);if(!entered){error.textContent="⚠️ Date of Birth enter karein.";input.focus();return;}
+   if(expectedDob!==null && normalizeDob(expectedDob)!==entered){error.textContent="❌ Date of Birth match nahi hui.";input.select();return;}
+   if(expectedDob===null){const cur=JSON.parse(localStorage.getItem("resumesList")||"[]");if(!cur.some(x=>normalizeDob(x.dob)===entered)){error.textContent="❌ Saved resume ki DOB se match nahi hui.";input.select();return;}}
+   close();onConfirm();
+ };setTimeout(()=>input.focus(),80);
+}
+window.onload=renderUserGrid;
 </script>
 
 <script>
