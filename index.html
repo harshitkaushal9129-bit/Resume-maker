@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050816">
-<meta name="description" content="Ultra Neon Resume Builder - A4 Resume">
+<meta name="description" content="Ultra Neon Resume Builder - Pro A4 Resume">
 <link rel="manifest" href="manifest.json">
 <title>Ultra Neon Resume Builder</title>
 <style>
@@ -26,13 +26,154 @@ input,textarea,select{width:100%;border:1px solid #244a68;border-radius:11px;bac
 input:focus,textarea:focus,select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,246,255,.12),0 0 14px rgba(0,246,255,.22)}
 textarea{min-height:90px;resize:vertical}
 .submit{width:100%;margin-top:22px;padding:15px;border:1px solid var(--cyan);border-radius:13px;background:linear-gradient(90deg,#00a8b3,#7b00ff,#d0009c);color:#fff;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 0 18px rgba(0,246,255,.3)}
+.submit:disabled{opacity:0.6;cursor:not-allowed}
 .nav{display:block;text-align:center;margin-top:16px;color:#8ffaff;font-weight:800}
+.error-text{color:#ff5588;font-size:12px;margin-top:4px;display:none}
 @media(max-width:650px){.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.top{align-items:flex-start;flex-direction:column}}
 </style>
+</head>
+<body>
+<div class="top">
+  <div class="logo">⚡ ULTRA NEON RESUME</div>
+  <div class="actions">
+    <button class="btn install-btn" id="installBtn" hidden>📲 Install App</button>
+    <a class="btn" href="data.html">📄 View Resumes</a>
+  </div>
+</div>
+<div class="form-container">
+<h2>Resume Data Input</h2>
+<form id="resumeForm">
+<div class="form-grid">
+<div class="full">
+  <label>Full Name *</label>
+  <input id="fullName" required placeholder="e.g. Harshit Kaushal">
+</div>
+<div class="full">
+  <label>Address *</label>
+  <input id="address" required placeholder="Full residential address">
+</div>
+<div>
+  <label>Mobile No (10-digit) *</label>
+  <input id="mobile" type="tel" maxlength="10" required placeholder="9129191898">
+  <div class="error-text" id="mobileError">Sahi 10-digit mobile number enter karein.</div>
+</div>
+<div>
+  <label>Gmail Address *</label>
+  <input id="email" type="email" required placeholder="username@gmail.com">
+  <div class="error-text" id="emailError">Sahi @gmail.com address enter karein.</div>
+</div>
+<div class="full">
+  <label>Profile Photo</label>
+  <input id="photoInput" type="file" accept="image/*">
+</div>
+<div class="full">
+  <label>Objective</label>
+  <textarea id="objective">To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process.</textarea>
+</div>
+<div class="full">
+  <label>Education Qualification (comma separated)</label>
+  <textarea id="education" placeholder="10th Passed from UP Board, 12th Passed from UP Board, Graduation from University"></textarea>
+</div>
+<div class="full">
+  <label>Technical Qualification (comma separated)</label>
+  <textarea id="technical" placeholder="ADCA (Advance Diploma in Computer Application), O Level, Tally Prime"></textarea>
+</div>
+<div class="full">
+  <label>Key Skills (comma separated)</label>
+  <textarea id="skills" placeholder="HTML, CSS, JavaScript, Web Development, Computer Hardware"></textarea>
+</div>
+<div class="full">
+  <label>Projects / Certifications (comma separated)</label>
+  <textarea id="projects" placeholder="NIELIT O Level Certification, Resume Builder Web App"></textarea>
+</div>
+<div class="full">
+  <label>Work Experience (comma separated)</label>
+  <textarea id="experience" placeholder="1 Year Computer Operator, Fresher"></textarea>
+</div>
+<div>
+  <label>Father's Name</label>
+  <input id="fatherName" placeholder="Father's full name">
+</div>
+<div>
+  <label>Mother's Name</label>
+  <input id="motherName" placeholder="Mother's full name">
+</div>
+<div>
+  <label>Date of Birth *</label>
+  <input id="dob" type="date" required>
+</div>
+<div>
+  <label>Gender</label>
+  <select id="gender">
+    <option value="Male" selected>Male</option>
+    <option value="Female">Female</option>
+    <option value="Other">Other</option>
+  </select>
+</div>
+<div>
+  <label>Marital Status</label>
+  <select id="maritalStatus">
+    <option value="Unmarried" selected>Unmarried</option>
+    <option value="Married">Married</option>
+  </select>
+</div>
+<div>
+  <label>Religion</label>
+  <input id="religion" value="Hindu">
+</div>
+<div>
+  <label>Nationality</label>
+  <input id="nationality" value="Indian">
+</div>
+<div>
+  <label>Languages Known</label>
+  <input id="languages" value="Hindi, English">
+</div>
+<div class="full">
+  <label>Interest / Hobbies</label>
+  <input id="interest" value="Teaching, Web Designing, Reading Books">
+</div>
+</div>
+<button class="submit" id="submitBtn" type="submit">⚡ SAVE & UPLOAD TO SERVER</button>
+</form>
+<a class="nav" href="data.html">Open Resume Gallery →</a>
+</div>
+
+<!-- Service Worker Registration & PWA Logic -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('✅ Service Worker Registered:', reg.scope))
+        .catch(err => console.error('❌ SW Registration Failed:', err));
+    });
+  }
+
+  let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if(installBtn) installBtn.hidden = false;
+  });
+
+  if(installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBtn.hidden = true;
+        }
+        deferredPrompt = null;
+      }
+    });
+  }
+</script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBBrVgaXd6R7_URz3FzX5oTA3mcLyFC_Ew",
@@ -45,88 +186,97 @@ textarea{min-height:90px;resize:vertical}
   };
 
   const app = initializeApp(firebaseConfig);
-  try { getAnalytics(app); } catch (e) { console.warn("Firebase Analytics unavailable:", e); }
-</script>
+  const db = getFirestore(app);
 
-</head>
-<body>
-<div class="top">
-  <div class="logo">⚡ ULTRA NEON RESUME</div>
-  <div class="actions"><button class="btn install-btn" hidden onclick="installPWA()">📲 Install App</button><a class="btn" href="data.html">📄 View Resumes</a></div>
-</div>
-<div class="form-container">
-<h2>Resume Data Input</h2>
-<form id="resumeForm">
-<div class="form-grid">
-<div class="full"><label>Full Name</label><input id="name" required placeholder="e.g. Harshit Kumar"></div>
-<div class="full"><label>Address</label><input id="address" required placeholder="Full address"></div>
-<div><label>Mobile No</label><input id="mobile" required placeholder="9129191898"></div>
-<div><label>Email ID</label><input id="email" type="email" placeholder="name@example.com"></div>
-<div class="full"><label>Profile Photo</label><input id="photoInput" type="file" accept="image/*"></div>
-<div class="full"><label>Objective</label><textarea id="objective">To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process and looking for a dynamic and vibrant work.</textarea></div>
-<div class="full"><label>Education Qualification (comma separated)</label><textarea id="education" placeholder="10th passed from UP Board, 12th passed from UP Board"></textarea></div>
-<div class="full"><label>Technical Qualification (comma separated)</label><textarea id="technical" placeholder="Advance Diploma in Computer Application, Tally Prime, O Level"></textarea></div>
-<div class="full"><label>Key Skills (comma separated)</label><textarea id="skills" placeholder="HTML, CSS, JavaScript, Accounting"></textarea></div>
-<div class="full"><label>Projects / Certifications (comma separated)</label><textarea id="projects" placeholder="NIELIT O Level Certification, Web Development"></textarea></div>
-<div class="full"><label>Work Experience (comma separated)</label><textarea id="experience" placeholder="1 year in GST Office"></textarea></div>
-<div><label>Father's Name</label><input id="fatherName"></div>
-<div><label>Mother's Name</label><input id="motherName"></div>
-<div><label>Date of Birth</label><input id="dob" placeholder="13/sep/2006"></div>
-<div><label>Gender</label><select id="gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
-<div><label>Marital Status</label><input id="maritalStatus" placeholder="un-married"></div>
-<div><label>Religion</label><input id="religion"></div>
-<div><label>Nationality</label><input id="nationality" value="Indian"></div>
-<div><label>Languages Known</label><input id="languages" placeholder="Hindi, English"></div>
-<div class="full"><label>Interest / Hobbies</label><input id="interest" placeholder="Teaching, Reading Books, Accounting"></div>
-</div>
-<button class="submit" type="submit">⚡ SAVE RESUME</button>
-</form>
-<a class="nav" href="data.html">Open Resume Gallery →</a>
-</div>
-<script>
-const defaultObjectiveText="To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process and looking for a dynamic and vibrant work.";
-document.getElementById("resumeForm").addEventListener("submit",e=>{
- e.preventDefault();
- const f=document.getElementById("photoInput");
- if(f.files&&f.files[0]){const r=new FileReader();r.onload=x=>saveData(x.target.result);r.readAsDataURL(f.files[0]);}
- else saveData("");
-});
-function saveData(photo){
- const objective=document.getElementById("objective").value.trim()||defaultObjectiveText;
- const arr=id=>document.getElementById(id).value.split(",").map(x=>x.trim()).filter(Boolean);
- const data={id:Date.now(),name:name.value,address:address.value,mobile:mobile.value,email:email.value,photo,objective,
- education:arr("education"),technical:arr("technical"),skills:arr("skills"),projects:arr("projects"),experience:arr("experience"),
- fatherName:fatherName.value,motherName:motherName.value,dob:dob.value,gender:gender.value,maritalStatus:maritalStatus.value,
- religion:religion.value,nationality:nationality.value,languages:languages.value,interest:interest.value};
- const list=JSON.parse(localStorage.getItem("resumesList")||"[]");list.push(data);localStorage.setItem("resumesList",JSON.stringify(list));
- alert("Resume saved successfully!");location.href="data.html";
-}
-</script>
+  const defaultObj = "To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process.";
 
-<script>
-let deferredPrompt = null;
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.querySelectorAll(".install-btn").forEach(b => b.hidden = false);
-});
-async function installPWA() {
-  if (!deferredPrompt) {
-    alert("Install option browser ke menu (⋮) me 'Install app' / 'Add to Home screen' ke naam se mil sakta hai.");
-    return;
+  document.getElementById("resumeForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const mobile = document.getElementById("mobile").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const mobileErr = document.getElementById("mobileError");
+    const emailErr = document.getElementById("emailError");
+
+    const mobileReg = /^[6-9]\d{9}$/;
+    const gmailReg = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+    let isValid = true;
+    if(!mobileReg.test(mobile)) {
+      mobileErr.style.display = "block";
+      isValid = false;
+    } else {
+      mobileErr.style.display = "none";
+    }
+
+    if(!gmailReg.test(email)) {
+      emailErr.style.display = "block";
+      isValid = false;
+    } else {
+      emailErr.style.display = "none";
+    }
+
+    if(!isValid) return;
+
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.innerText = "⏳ Uploading to Server...";
+
+    const fileInput = document.getElementById("photoInput");
+    if(fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (x) => uploadToFirebase(x.target.result);
+      reader.readAsDataURL(fileInput.files[0]);
+    } else {
+      uploadToFirebase("");
+    }
+  });
+
+  async function uploadToFirebase(photoBase64) {
+    const arr = id => document.getElementById(id).value.split(",").map(x=>x.trim()).filter(Boolean);
+    
+    let rawDob = document.getElementById("dob").value;
+    let formattedDob = rawDob;
+    if(rawDob.includes("-")) {
+      const [y, m, d] = rawDob.split("-");
+      formattedDob = `${d}/${m}/${y}`;
+    }
+
+    const payload = {
+      name: document.getElementById("fullName").value.trim(),
+      address: document.getElementById("address").value.trim(),
+      mobile: document.getElementById("mobile").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      photo: photoBase64,
+      objective: document.getElementById("objective").value.trim() || defaultObj,
+      education: arr("education"),
+      technical: arr("technical"),
+      skills: arr("skills"),
+      projects: arr("projects"),
+      experience: arr("experience"),
+      fatherName: document.getElementById("fatherName").value.trim(),
+      motherName: document.getElementById("motherName").value.trim(),
+      dob: formattedDob,
+      gender: document.getElementById("gender").value,
+      maritalStatus: document.getElementById("maritalStatus").value,
+      religion: document.getElementById("religion").value.trim() || "Hindu",
+      nationality: document.getElementById("nationality").value.trim() || "Indian",
+      languages: document.getElementById("languages").value.trim() || "Hindi, English",
+      interest: document.getElementById("interest").value.trim() || "Teaching, Web Designing",
+      createdAt: new Date().toISOString()
+    };
+
+    try {
+      await addDoc(collection(db, "resumes"), payload);
+      alert("✅ Resume Server Par Upload Ho Gaya!");
+      window.location.href = "data.html";
+    } catch(err) {
+      console.error("Firebase Storage Error:", err);
+      alert("❌ Server Upload Failed: " + err.message);
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("submitBtn").innerText = "⚡ SAVE & UPLOAD TO SERVER";
+    }
   }
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  document.querySelectorAll(".install-btn").forEach(b => b.hidden = true);
-}
-window.addEventListener("appinstalled", () => {
-  document.querySelectorAll(".install-btn").forEach(b => b.hidden = true);
-});
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(console.warn));
-}
 </script>
-
 </body>
 </html>
