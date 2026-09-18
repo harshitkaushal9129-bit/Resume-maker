@@ -1,7 +1,7 @@
 {
   "name": "Ultra Neon Resume Builder",
   "short_name": "Neon Resume",
-  "start_url": "./input.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#050816",
