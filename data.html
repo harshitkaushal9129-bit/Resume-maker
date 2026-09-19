@@ -1,320 +1,298 @@
+<!-- data.html -->
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#050816">
-<meta name="description" content="Ultra Neon Resume Gallery with A4 Print">
-<link rel="manifest" href="manifest.json">
-<title>Ultra Neon Resume Gallery</title>
-<style>
-:root{--cyan:#00f6ff;--pink:#ff00d4;--purple:#8b5cf6;--bg:#050816}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:#eafcff;background:radial-gradient(circle at 10% 10%,#102b55 0,transparent 35%),radial-gradient(circle at 90% 20%,#401044 0,transparent 35%),#050816;padding:26px 16px}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(0,246,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,0,212,.025) 1px,transparent 1px);background-size:28px 28px}
-.top-bar{max-width:1100px;margin:0 auto 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-size:23px;font-weight:900;text-shadow:0 0 12px var(--cyan),0 0 22px var(--pink)}
-.actions{display:flex;gap:9px;flex-wrap:wrap}
-.btn{padding:10px 15px;border:1px solid var(--cyan);border-radius:11px;color:#fff;background:#081326;text-decoration:none;font-weight:800;cursor:pointer;box-shadow:0 0 12px rgba(0,246,255,.22)}
-.users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:20px;max-width:1100px;margin:auto}
-.user-card{position:relative;background:rgba(8,15,35,.9);border:1px solid rgba(0,246,255,.35);border-radius:18px;padding:20px;text-align:center;cursor:pointer;box-shadow:0 0 18px rgba(0,246,255,.08);transition:.2s}
-.user-card:hover{transform:translateY(-5px);border-color:var(--cyan);box-shadow:0 0 24px rgba(0,246,255,.25)}
-.user-card-img{width:100px;height:120px;object-fit:cover;border-radius:8px;border:1px solid var(--cyan);margin:auto;display:block;background:#fff}
-.user-card-name{font-size:17px;font-weight:900;margin:12px 0 4px}
-.user-card-sub{font-size:13px;color:#9cc8d0;margin-bottom:12px}
-.view{color:#7ffaff;font-size:13px;font-weight:800}
-.delete-btn-icon{position:absolute;top:10px;right:10px;width:30px;height:30px;border:1px solid #ff3b81;border-radius:50%;background:#3b1025;color:#fff;cursor:pointer}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Resumes Vault</title>
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Georgia&family=Merriweather:wght@400;700&family=Cinzel:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #05050d; --card-bg: rgba(13, 13, 26, 0.95); --neon-cyan: #00f3ff; --neon-pink: #ff007f; --neon-purple: #b000ff; --neon-green: #00ff66; --text-main: #f0f6fc; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Rajdhani', sans-serif; background-color: var(--bg-dark); background-image: radial-gradient(circle at 80% 20%, rgba(0, 243, 255, 0.12) 0%, transparent 40%), radial-gradient(circle at 20% 80%, rgba(255, 0, 127, 0.12) 0%, transparent 40%); margin: 0; padding: 30px 20px; color: var(--text-main); min-height: 100vh; }
+        .top-bar { max-width: 1000px; margin: 0 auto 30px auto; display: flex; justify-content: space-between; align-items: center; }
+        .btn { padding: 12px 22px; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)); color: white; text-decoration: none; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-weight: 700; border: none; cursor: pointer; font-size: 13px; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); text-transform: uppercase; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(255, 0, 127, 0.8); }
+        .btn-danger { background: linear-gradient(135deg, #ff0055, #990033); box-shadow: 0 0 15px rgba(255, 0, 85, 0.4); }
+        .btn-print { background: linear-gradient(135deg, #00c8ff, #0055ff); }
+        .btn-docx { background: linear-gradient(135deg, var(--neon-green), #009933); color: #000; }
+        .btn-close { background: #334155; }
+        .users-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 25px; max-width: 1000px; margin: 0 auto; }
+        .user-card { background: var(--card-bg); border-radius: 16px; padding: 22px; text-align: center; border: 1px solid rgba(0, 243, 255, 0.3); box-shadow: 0 0 15px rgba(0, 243, 255, 0.15); cursor: pointer; transition: all 0.3s ease; position: relative; backdrop-filter: blur(10px); }
+        .user-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--neon-pink); box-shadow: 0 0 25px rgba(255, 0, 127, 0.5); }
+        .user-card-img { width: 105px; height: 125px; object-fit: cover; border-radius: 8px; border: 2px solid var(--neon-cyan); margin: 0 auto 14px auto; display: block; box-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+        .user-card-name { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px; text-shadow: 0 0 5px var(--neon-cyan); }
+        .user-card-sub { font-size: 14px; color: var(--neon-pink); margin-bottom: 14px; }
+        .delete-btn-icon { position: absolute; top: 12px; right: 12px; background: rgba(255, 0, 85, 0.2); color: #ff0055; border: 1px solid #ff0055; border-radius: 50%; width: 28px; height: 28px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .delete-btn-icon:hover { background: #ff0055; color: #fff; box-shadow: 0 0 10px #ff0055; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 13, 0.85); backdrop-filter: blur(8px); z-index: 999; overflow-y: auto; padding: 20px 0; }
+        .modal-action-bar { width: 210mm; margin: 0 auto 15px auto; display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 12px 20px; border-radius: 12px; border: 1px solid var(--neon-cyan); box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); }
+        .layout-selector { display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--neon-cyan); }
+        .layout-selector select { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--neon-pink); background: #05050d; color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; cursor: pointer; }
+        .resume-card { width: 210mm; min-height: 297mm; background: #ffffff; padding: 45px 50px; margin: 0 auto; box-shadow: 0 0 30px rgba(0,243,255,0.3); box-sizing: border-box; color: #111; }
+        .photo-box { width: 105px; height: 125px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fafafa; }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .objective-text { font-size: 13.5px; line-height: 1.5; margin-top: 6px; text-align: justify; }
+        ul.resume-ul { margin: 6px 0 10px 0; padding-left: 20px; }
+        ul.resume-ul li { margin-bottom: 4px; font-size: 13.5px; line-height: 1.4; }
+        .details-table { width: 100%; font-size: 13.5px; margin-top: 8px; border-collapse: collapse; }
+        .details-table td { padding: 4px 0; vertical-align: top; line-height: 1.4; }
+        .details-table td:first-child { width: 180px; font-weight: bold; }
 
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:999;overflow-y:auto;padding:18px 0}
-.modal-action-bar{width:210mm;max-width:calc(100% - 20px);margin:0 auto 12px;display:flex;justify-content:space-between;gap:10px}
+        /* 10 DISTINCT LAYOUT STYLES */
+        /* 1. Classic Executive */
+        .layout-classic { font-family: 'Georgia', serif; }
+        .layout-classic .resume-title { text-align: center; font-size: 26px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 2px solid #000; }
+        .layout-classic .header-section { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .layout-classic .header-info { width: 78%; font-size: 14px; line-height: 1.6; }
+        .layout-classic .header-info p { margin: 3px 0; }
+        .layout-classic .section-title { font-size: 15px; font-weight: bold; text-transform: uppercase; margin-top: 18px; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 3px; letter-spacing: 0.5px; }
 
-/* Dynamic Layout Switcher Box */
-.layout-picker-container{width:210mm;max-width:calc(100% - 20px);margin:18px auto 0;background:rgba(8,15,35,.95);border:1px solid rgba(0,246,255,.4);border-radius:16px;padding:15px;text-align:center}
-.layout-title{font-size:15px;font-weight:800;color:var(--cyan);margin-bottom:10px}
-.layout-options{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.layout-btn{padding:8px 14px;border:1px solid #244a68;border-radius:10px;background:#071020;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:.2s}
-.layout-btn:hover, .layout-btn.active{border-color:var(--cyan);background:var(--cyan);color:#000;box-shadow:0 0 12px rgba(0,246,255,.4)}
+        /* 2. Modern Cyber Blue */
+        .layout-modern { font-family: 'Rajdhani', sans-serif; color: #0f172a; }
+        .layout-modern .resume-title { font-size: 28px; font-weight: 700; color: #0284c7; text-transform: uppercase; margin-bottom: 5px; }
+        .layout-modern .header-section { display: flex; justify-content: space-between; border-bottom: 3px solid #0284c7; padding-bottom: 15px; margin-bottom: 20px; }
+        .layout-modern .header-info p { margin: 3px 0; font-size: 14px; }
+        .layout-modern .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #0284c7; background: #f0f9ff; padding: 6px 10px; border-radius: 4px; margin-top: 18px; margin-bottom: 10px; }
 
-/* --- RESUME LAYOUT THEMES --- */
-.resume-card{width:210mm;min-height:297mm;background:#fff!important;color:#111;padding:45px 50px;margin:0 auto;box-sizing:border-box;font-family:Georgia,"Times New Roman",serif;box-shadow:0 0 35px rgba(0,246,255,.25);transition:all .3s ease}
+        /* 3. Dark Header Premium */
+        .layout-darkaccent { font-family: 'Rajdhani', sans-serif; color: #0f172a; }
+        .layout-darkaccent .header-section { background: #0f172a; color: #fff; padding: 25px; margin: -45px -50px 25px -50px; display: flex; justify-content: space-between; align-items: center; }
+        .layout-darkaccent .resume-title { font-size: 26px; font-weight: 700; color: #38bdf8; text-transform: uppercase; }
+        .layout-darkaccent .header-info p { margin: 3px 0; font-size: 14px; }
+        .layout-darkaccent .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #0f172a; border-left: 4px solid #0284c7; padding-left: 10px; margin-top: 20px; margin-bottom: 10px; }
 
-/* Theme 1: Classic */
-.resume-card.theme-classic{font-family:Georgia,serif;background:#fff!important;color:#111}
-.theme-classic .resume-title{text-align:center;font-size:26px;font-weight:700;text-transform:uppercase;margin-bottom:25px;padding-bottom:8px;border-bottom:2px solid #000}
-.theme-classic .section-title{font-size:15px;font-weight:bold;text-transform:uppercase;margin-top:18px;margin-bottom:8px;border-bottom:1px solid #333;padding-bottom:3px}
+        /* 4. Elegant Emerald */
+        .layout-emerald { font-family: 'Merriweather', serif; color: #1e293b; }
+        .layout-emerald .resume-title { font-size: 27px; font-weight: 700; color: #047857; text-align: center; margin-bottom: 8px; }
+        .layout-emerald .header-section { display: flex; justify-content: space-between; border-bottom: 2px dashed #047857; padding-bottom: 15px; margin-bottom: 20px; }
+        .layout-emerald .header-info p { margin: 3px 0; font-size: 13.5px; }
+        .layout-emerald .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #047857; border-bottom: 1px solid #a7f3d0; padding-bottom: 4px; margin-top: 18px; margin-bottom: 8px; }
 
-/* Theme 2: Modern Blue Header */
-.resume-card.theme-modern{font-family:'Segoe UI',sans-serif;background:#f8fafc!important;color:#334155}
-.theme-modern .resume-title{background:#0284c7;color:#fff;padding:12px;text-align:center;font-weight:800;border-radius:6px;letter-spacing:2px;margin-bottom:20px}
-.theme-modern .section-title{color:#0284c7;font-size:16px;font-weight:800;border-left:4px solid #0284c7;padding-left:10px;border-bottom:none;margin-top:20px;text-transform:uppercase}
+        /* 5. Minimalist Charcoal */
+        .layout-minimal { font-family: 'Roboto', sans-serif; color: #334155; }
+        .layout-minimal .resume-title { font-size: 26px; font-weight: 700; color: #0f172a; letter-spacing: 1px; }
+        .layout-minimal .header-section { display: flex; justify-content: space-between; border-bottom: 1px solid #cbd5e1; padding-bottom: 12px; margin-bottom: 18px; }
+        .layout-minimal .header-info p { margin: 2px 0; font-size: 13.5px; }
+        .layout-minimal .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #475569; letter-spacing: 1px; margin-top: 16px; margin-bottom: 6px; }
 
-/* Theme 3: Elegant Purple */
-.resume-card.theme-elegant{font-family:Arial,sans-serif;background:#fff!important;color:#2d3748}
-.theme-elegant .resume-title{color:#6b21a8;font-size:28px;text-align:left;font-weight:900;border-bottom:3px double #6b21a8;padding-bottom:5px;margin-bottom:20px}
-.theme-elegant .section-title{color:#6b21a8;font-size:15px;font-weight:bold;background:#f3e8ff;padding:5px 10px;border-radius:4px;border:none;margin-top:18px}
+        /* 6. Crimson Royal */
+        .layout-crimson { font-family: 'Georgia', serif; color: #27272a; }
+        .layout-crimson .resume-title { font-size: 28px; font-weight: 700; color: #991b1b; text-transform: uppercase; border-bottom: 3px double #991b1b; padding-bottom: 6px; margin-bottom: 15px; }
+        .layout-crimson .header-section { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .layout-crimson .header-info p { margin: 3px 0; font-size: 14px; }
+        .layout-crimson .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #991b1b; border-bottom: 1px solid #fca5a5; padding-bottom: 3px; margin-top: 18px; margin-bottom: 8px; }
 
-/* Theme 4: Minimal Dark Accent */
-.resume-card.theme-minimal{font-family:Helvetica,sans-serif;background:#f1f5f9!important;color:#0f172a}
-.theme-minimal .resume-title{color:#0f172a;text-align:right;font-size:24px;font-weight:900;border-bottom:3px solid #0f172a;margin-bottom:20px}
-.theme-minimal .section-title{color:#0f172a;font-size:14px;font-weight:900;letter-spacing:1px;border-bottom:2px solid #94a3b8;padding-bottom:2px;margin-top:18px}
+        /* 7. Golden Luxury */
+        .layout-golden { font-family: 'Cinzel', serif; color: #1c1917; }
+        .layout-golden .resume-title { font-size: 26px; font-weight: 700; color: #854d0e; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+        .layout-golden .header-section { display: flex; justify-content: space-between; border-top: 2px solid #ca8a04; border-bottom: 2px solid #ca8a04; padding: 12px 0; margin: 15px 0 20px 0; }
+        .layout-golden .header-info p { margin: 3px 0; font-size: 13.5px; font-family: 'Georgia', serif; }
+        .layout-golden .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #854d0e; border-bottom: 1px solid #fef08a; padding-bottom: 3px; margin-top: 18px; margin-bottom: 8px; letter-spacing: 1px; }
 
-.header-section{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
-.header-info{width:78%;font-size:14px;line-height:1.6} .header-info p{margin:3px 0}
-.photo-box{width:105px;height:125px;border:1px solid #333;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fafafa}
-.photo-box img{width:100%;height:100%;object-fit:cover}
-.objective-text{font-size:13.5px;line-height:1.5;margin-top:6px;text-align:justify}
-.resume-ul{margin:6px 0 10px;padding-left:20px} .resume-ul li{margin-bottom:4px;font-size:13.5px;line-height:1.4}
-.details-table{width:100%;font-size:13.5px;margin-top:8px;border-collapse:collapse} .details-table td{padding:4px 0;vertical-align:top;line-height:1.4} .details-table td:first-child{width:180px;font-weight:bold}
+        /* 8. Tech Indigo */
+        .layout-indigo { font-family: 'Rajdhani', sans-serif; color: #1e1b4b; }
+        .layout-indigo .resume-title { font-size: 28px; font-weight: 700; color: #3730a3; text-transform: uppercase; }
+        .layout-indigo .header-section { display: flex; justify-content: space-between; background: #e0e7ff; padding: 18px; border-radius: 8px; margin-bottom: 20px; }
+        .layout-indigo .header-info p { margin: 3px 0; font-size: 14px; }
+        .layout-indigo .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #3730a3; border-bottom: 2px solid #6366f1; padding-bottom: 4px; margin-top: 18px; margin-bottom: 8px; }
 
-.delete-dialog{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(12px)}.delete-panel{width:min(440px,100%);background:linear-gradient(145deg,#0b1329,#160b22);border:1px solid rgba(0,246,255,.5);border-radius:24px;padding:28px;position:relative;text-align:center;box-shadow:0 0 35px rgba(0,246,255,.18)}.dialog-close{position:absolute;right:13px;top:13px;width:34px;height:34px;border-radius:50%;border:1px solid #35516b;background:#071020;color:#fff;font-size:20px;cursor:pointer}.danger-icon{width:62px;height:62px;margin:0 auto 12px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:rgba(255,59,129,.12);border:1px solid rgba(255,59,129,.5);font-size:28px}.dialog-title{font-size:23px;font-weight:900;text-shadow:0 0 10px var(--cyan);margin-bottom:7px}.dialog-message{font-size:13px;color:#b9d6dc;line-height:1.5;margin-bottom:19px}.verify-box{text-align:left;padding:15px;border-radius:16px;border:1px solid rgba(0,246,255,.25);background:rgba(2,8,22,.62)}.password-wrap{display:flex;gap:7px}.password-wrap input{flex:1;padding:8px;border-radius:8px;border:1px solid #244a68;background:#071020;color:#fff}.password-wrap button{width:47px;border:1px solid #244a68;border-radius:11px;background:#071020;color:#fff;cursor:pointer}.verify-hint{font-size:11px;color:#7faeb8;margin-top:8px}.delete-error{min-height:22px;padding-top:8px;color:#ff7da8;font-size:12px;font-weight:800}.dialog-actions{display:flex;gap:10px;margin-top:6px}.dialog-actions .btn{flex:1}.cancel-delete{border-color:#496173;background:#101a2b}.confirm-delete{border-color:#ff3b81;background:linear-gradient(135deg,#4a102b,#741044)}
+        /* 9. Clean Slate */
+        .layout-slate { font-family: 'Roboto', sans-serif; color: #0f172a; }
+        .layout-slate .resume-title { font-size: 26px; font-weight: 700; color: #334155; border-left: 6px solid #475569; padding-left: 12px; margin-bottom: 15px; }
+        .layout-slate .header-section { display: flex; justify-content: space-between; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px; }
+        .layout-slate .header-info p { margin: 3px 0; font-size: 13.5px; }
+        .layout-slate .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #334155; background: #f1f5f9; padding: 5px 8px; margin-top: 18px; margin-bottom: 8px; }
 
-@media print{
-  @page{size:A4;margin:0}
-  body{background:#fff!important;padding:0!important;margin:0!important}
-  .top-bar,.users-grid,.modal-action-bar,.layout-picker-container{display:none!important}
-  .modal-overlay{position:static!important;background:none!important;padding:0!important;display:block!important;overflow:visible!important}
-  .resume-card{box-shadow:none!important;margin:0!important;width:100%!important;min-height:auto!important;padding:40px 45px!important;border:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
-</style>
+        /* 10. Coral Creative */
+        .layout-coral { font-family: 'Rajdhani', sans-serif; color: #27272a; }
+        .layout-coral .resume-title { font-size: 28px; font-weight: 700; color: #e11d48; text-transform: uppercase; }
+        .layout-coral .header-section { display: flex; justify-content: space-between; border-bottom: 3px solid #f43f5e; padding-bottom: 12px; margin-bottom: 20px; }
+        .layout-coral .header-info p { margin: 3px 0; font-size: 14px; }
+        .layout-coral .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #e11d48; border-bottom: 1px dashed #fda4af; padding-bottom: 3px; margin-top: 18px; margin-bottom: 8px; }
+
+        @media print {
+            @page { size: A4; margin: 0; }
+            body { background: #fff !important; padding: 0 !important; margin: 0 !important; }
+            .top-bar, .users-grid, .modal-action-bar { display: none !important; }
+            .modal-overlay { position: static !important; background: none !important; padding: 0 !important; display: block !important; }
+            .resume-card { box-shadow: none !important; margin: 0 !important; width: 100% !important; border: none !important; }
+        }
+    </style>
 </head>
 <body>
+
 <div class="top-bar">
-  <div class="logo">⚡ ULTRA NEON RESUME GALLERY</div>
-  <div class="actions">
-    <a class="btn" href="index.html">＋ Add Resume</a>
-  </div>
+    <a href="index.html" class="btn">+ Create New Resume</a>
+    <button onclick="clearAllData()" class="btn btn-danger">Clear Vault Data</button>
 </div>
 
-<div class="users-grid" id="usersGrid">
-  <div style="grid-column:1/-1;text-align:center;padding:45px">⌛ Loading Server Resumes...</div>
-</div>
+<div class="users-grid" id="usersGrid"></div>
 
 <div class="modal-overlay" id="resumeModal">
-  <div class="modal-action-bar">
-    <button class="btn" onclick="window.print()">🖨️ Print A4</button>
-    <button class="btn" onclick="closeModal()">✖ Close</button>
-  </div>
-  
-  <!-- Resume Document Output -->
-  <div id="modalResumeContent"></div>
-
-  <!-- Dynamic Layout Switcher Buttons -->
-  <div class="layout-picker-container">
-    <div class="layout-title">🎨 CHOOSE STYLISH RESUME LAYOUT</div>
-    <div class="layout-options">
-      <button class="layout-btn active" onclick="changeLayout('theme-classic')">📄 Classic Standard</button>
-      <button class="layout-btn" onclick="changeLayout('theme-modern')">🔵 Modern Blue</button>
-      <button class="layout-btn" onclick="changeLayout('theme-elegant')">🟣 Royal Purple</button>
-      <button class="layout-btn" onclick="changeLayout('theme-minimal')">🖤 Minimal Dark Accent</button>
+    <div class="modal-action-bar">
+        <div class="layout-selector">
+            <span>Layout Style:</span>
+            <select id="layoutSelect" onchange="renderResumeModal()">
+                <option value="classic">1. Classic Executive</option>
+                <option value="modern">2. Modern Cyber Blue</option>
+                <option value="darkaccent">3. Dark Header Premium</option>
+                <option value="emerald">4. Elegant Emerald</option>
+                <option value="minimal">5. Minimalist Charcoal</option>
+                <option value="crimson">6. Crimson Royal</option>
+                <option value="golden">7. Golden Luxury</option>
+                <option value="indigo">8. Tech Indigo</option>
+                <option value="slate">9. Clean Slate</option>
+                <option value="coral">10. Coral Creative</option>
+            </select>
+        </div>
+        <div>
+            <button class="btn btn-print" onclick="window.print()">🖨️ PDF / Print</button>
+            <button class="btn btn-docx" onclick="downloadDocx()">📄 Download .DOCX</button>
+            <button class="btn btn-close" onclick="closeModal()">✖ Close</button>
+        </div>
     </div>
-  </div>
+    <div id="modalResumeContent"></div>
 </div>
 
-<!-- Service Worker Registration Script -->
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('✅ Service Worker Registered:', reg.scope))
-        .catch(err => console.error('❌ SW Registration Failed:', err));
-    });
-  }
-</script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-  import { getFirestore, collection, onSnapshot, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBBrVgaXd6R7_URz3FzX5oTA3mcLyFC_Ew",
-    authDomain: "resume-38506.firebaseapp.com",
-    projectId: "resume-38506",
-    storageBucket: "resume-38506.firebasestorage.app",
-    messagingSenderId: "979584346197",
-    appId: "1:979584346197:web:d3c494981cfaea9e394cdc",
-    measurementId: "G-9DQFN3K84S"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  let fetchedResumes = [];
-  let currentTheme = "theme-classic";
-
-  function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
-  function parseListItems(v){
-    if(!v) return "";
-    const a = Array.isArray(v) ? v : [v];
-    return a.flatMap(x=>String(x).split(/[.,]/)).map(x=>x.trim()).filter(Boolean).map(x=>`<li>${esc(x)}.</li>`).join("");
-  }
-
-  const LOCAL_KEY = "ultra_neon_resumes_cache_v1";
-  function saveLocalCache(items){ try{ localStorage.setItem(LOCAL_KEY, JSON.stringify(items)); }catch(e){} }
-  function loadLocalCache(){ try{return JSON.parse(localStorage.getItem(LOCAL_KEY)||"[]");}catch(e){return [];} }
-  fetchedResumes = loadLocalCache();
-  renderUserGrid();
-
-  onSnapshot(collection(db, "resumes"), (snapshot) => {
-    fetchedResumes = [];
-    snapshot.forEach(docSnap => {
-      fetchedResumes.push({ id: docSnap.id, ...docSnap.data() });
-    });
-    saveLocalCache(fetchedResumes);
-    renderUserGrid();
-  }, (err) => {
-    console.error(err);
-    document.getElementById("usersGrid").innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#ff5588;">Server Error: ${err.message}</div>`;
-  });
-
-  function renderUserGrid() {
-    const grid = document.getElementById("usersGrid");
-    if(!fetchedResumes.length) {
-      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:45px">No Server Resume Data Found. <a class="view" href="index.html">Add New Resume</a></div>';
-      return;
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed: ', err));
+        });
     }
-    grid.innerHTML = "";
-    fetchedResumes.forEach((d, i) => {
-      const card = document.createElement("div");
-      card.className = "user-card";
-      const photo = d.photo || "https://via.placeholder.com/100x120?text=NO+PHOTO";
-      card.innerHTML = `<button class="delete-btn-icon" title="Delete" onclick="window.deleteResumeEvent(event,'${d.id}','${d.dob}')">✕</button>
-      <img src="${photo}" class="user-card-img" alt="Profile">
-      <div class="user-card-name">${esc(d.name || "Unnamed User")}</div>
-      <div class="user-card-sub">${esc(d.mobile || "No Mobile")}</div>
-      <div class="view">CLICK TO VIEW A4 RESUME 📄</div>`;
-      card.onclick = (e) => {
-        if(!e.target.classList.contains("delete-btn-icon")) openResumeModal(i);
-      };
-      grid.appendChild(card);
-    });
-  }
 
-  function openResumeModal(i) {
-    const d = fetchedResumes[i];
-    if(!d) return;
-    const photo = d.photo ? `<img src="${d.photo}" alt="Photo">` : '<span style="font-size:10px;color:#777">PASSPORT PHOTO</span>';
-    const sec = (title, list) => list && list.length ? `<div class="section-title">${title} :-</div><ul class="resume-ul">${parseListItems(list)}</ul>` : "";
+    let activeIndex = null;
+    const DEFAULT_OBJECTIVE = "To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process and looking for a dynamic and vibrant work.";
 
-    document.getElementById("modalResumeContent").innerHTML = `
-    <div class="resume-card ${currentTheme}" id="activeResumeCard">
-      <div class="resume-title">RESUME</div>
-      <div class="header-section">
-        <div class="header-info">
-          <p><strong>Name :</strong> ${esc(d.name)}</p>
-          <p><strong>Address :</strong> ${esc(d.address)}</p>
-          <p><strong>Mobile No :</strong> ${esc(d.mobile)}</p>
-          ${d.email ? `<p><strong>Email ID :</strong> ${esc(d.email)}</p>` : ""}
-        </div>
-        <div class="photo-box">${photo}</div>
-      </div>
-      <div class="section-title">Objective :-</div>
-      <div class="objective-text">${esc(d.objective)}</div>
-      ${sec("Education Qualification", d.education)}
-      ${sec("Technical Qualification", d.technical)}
-      ${sec("Key Skills & Capabilities", d.skills)}
-      ${sec("Projects / Certifications", d.projects)}
-      ${sec("Work Experience", d.experience)}
-      <div class="section-title">Personal Details :-</div>
-      <table class="details-table">
-        <tr><td>Father’s Name :-</td><td>${esc(d.fatherName)}</td></tr>
-        <tr><td>Mother’s Name :-</td><td>${esc(d.motherName)}</td></tr>
-        <tr><td>Date of Birth :-</td><td>${esc(d.dob)}</td></tr>
-        ${d.gender ? `<tr><td>Gender :-</td><td>${esc(d.gender)}</td></tr>` : ""}
-        <tr><td>Marital Status :-</td><td>${esc(d.maritalStatus)}</td></tr>
-        <tr><td>Religion :-</td><td>${esc(d.religion)}</td></tr>
-        <tr><td>Nationality :-</td><td>${esc(d.nationality)}</td></tr>
-        <tr><td>Language Known :-</td><td>${esc(d.languages)}</td></tr>
-        <tr><td>Interest :-</td><td>${esc(d.interest)}</td></tr>
-      </table>
-    </div>`;
-
-    document.getElementById("resumeModal").style.display = "block";
-    document.body.style.overflow = "hidden";
-  }
-
-  window.changeLayout = function(themeClass) {
-    currentTheme = themeClass;
-    const card = document.getElementById("activeResumeCard");
-    if(card) {
-      card.className = "resume-card " + themeClass;
+    function renderListItems(strData) {
+        if (!strData) return '';
+        let items = strData.split('.').map(item => item.trim()).filter(Boolean);
+        return items.map(item => `<li>${item}.</li>`).join('');
     }
-    document.querySelectorAll(".layout-btn").forEach(btn => {
-      btn.classList.remove("active");
-      if(btn.getAttribute("onclick").includes(themeClass)) btn.classList.add("active");
-    });
-  };
 
-  window.closeModal = function() {
-    document.getElementById("resumeModal").style.display = "none";
-    document.body.style.overflow = "auto";
-  };
+    function renderUserGrid() {
+        const grid = document.getElementById('usersGrid');
+        const resumes = JSON.parse(localStorage.getItem('resumesList')) || [];
+        if (resumes.length === 0) {
+            grid.innerHTML = '<h3 style="grid-column: 1/-1; text-align:center; color:var(--neon-pink); font-family:Orbitron;">NO RESUME DATA FOUND. PLEASE ADD DATA IN <a href="index.html" style="color:var(--neon-cyan);">INDEX.HTML</a></h3>';
+            return;
+        }
+        grid.innerHTML = '';
+        resumes.forEach((data, index) => {
+            const userCard = document.createElement('div');
+            userCard.className = 'user-card';
+            const photoSrc = data.photo || 'https://via.placeholder.com/100x120?text=NO+PHOTO';
+            userCard.innerHTML = `
+                <button class="delete-btn-icon" title="Delete Resume" onclick="deleteResume(event, ${index})">✕</button>
+                <img src="${photoSrc}" class="user-card-img" alt="User Image">
+                <div class="user-card-name">${data.name || 'Unnamed User'}</div>
+                <div class="user-card-sub">${data.mobile || 'No Mobile'}</div>
+                <span style="font-size: 13px; color: var(--neon-cyan); font-weight: 700;">LAUNCH RESUME 📄</span>
+            `;
+            userCard.onclick = (e) => {
+                if(!e.target.classList.contains('delete-btn-icon')) { openResumeModal(index); }
+            };
+            grid.appendChild(userCard);
+        });
+    }
 
-  window.deleteResumeEvent = function(e, docId, expectedDob) {
-    e.stopPropagation();
-    showDeleteDialog("Delete Resume", "Server se is resume ko delete karne ke liye DOB enter karein.", expectedDob, async () => {
-      try {
-        await deleteDoc(doc(db, "resumes", docId));
-        fetchedResumes = fetchedResumes.filter(r => r.id !== docId);
-        saveLocalCache(fetchedResumes);
-        renderUserGrid();
-        alert("✅ Server Se Resume Delete Ho Gaya!");
-      } catch(err) {
-        alert("❌ Delete Error: " + err.message);
-      }
-    });
-  };
+    function openResumeModal(index) {
+        activeIndex = index;
+        document.getElementById('resumeModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        renderResumeModal();
+    }
 
-  function normalizeDob(v){ return String(v||"").trim().toLowerCase().replace(/\s+/g,"").replace(/[-.]/g,"/"); }
+    function renderResumeModal() {
+        const resumes = JSON.parse(localStorage.getItem('resumesList')) || [];
+        const data = resumes[activeIndex];
+        if (!data) return;
 
-  function showDeleteDialog(title, message, expectedDob, onConfirm) {
-    const old = document.getElementById("deleteDialog");
-    if(old) old.remove();
-    const box = document.createElement("div");
-    box.id = "deleteDialog";
-    box.className = "delete-dialog";
-    box.innerHTML = `
-    <div class="delete-panel">
-      <button class="dialog-close" type="button">×</button>
-      <div class="danger-icon">🛡️</div>
-      <div class="dialog-title">${esc(title)}</div>
-      <div class="dialog-message">${esc(message)}</div>
-      <div class="verify-box">
-        <label for="dobVerify">Date of Birth</label>
-        <div class="password-wrap">
-          <input id="dobVerify" type="password" placeholder="DD/MM/YYYY">
-          <button id="toggleDob" type="button">👁</button>
-        </div>
-      </div>
-      <div id="deleteError" class="delete-error"></div>
-      <div class="dialog-actions">
-        <button class="btn cancel-delete" type="button">Cancel</button>
-        <button class="btn confirm-delete" type="button">🗑 Delete</button>
-      </div>
-    </div>`;
+        const selectedLayout = document.getElementById('layoutSelect').value;
+        const modalContent = document.getElementById('modalResumeContent');
+        const photoHtml = data.photo ? `<img src="${data.photo}" alt="Photo">` : `<span style="font-size:10px; color:#777; text-align:center;">PASSPORT PHOTO</span>`;
+        
+        const educationList = renderListItems(data.education);
+        const technicalList = renderListItems(data.technical);
+        const skillsList = renderListItems(data.skills);
+        const projectsList = renderListItems(data.projects);
+        const experienceList = renderListItems(data.experience);
+        const finalObjective = (data.objective && data.objective.trim() !== '') ? data.objective : DEFAULT_OBJECTIVE;
 
-    document.body.appendChild(box);
-    const input = box.querySelector("#dobVerify");
-    const error = box.querySelector("#deleteError");
-    const close = () => box.remove();
+        modalContent.innerHTML = `
+            <div class="resume-card layout-${selectedLayout}" id="printableResume">
+                <div class="header-section">
+                    <div class="header-info">
+                        <div class="resume-title">${data.name || 'RESUME'}</div>
+                        <p><strong>Address :</strong> ${data.address || ''}</p>
+                        <p><strong>Mobile No :</strong> ${data.mobile || ''}</p>
+                        ${data.email ? `<p><strong>Email ID :</strong> ${data.email}</p>` : ''}
+                    </div>
+                    <div class="photo-box">${photoHtml}</div>
+                </div>
 
-    box.querySelector(".dialog-close").onclick = close;
-    box.querySelector(".cancel-delete").onclick = close;
-    box.querySelector("#toggleDob").onclick = () => input.type = input.type === "password" ? "text" : "password";
+                <div class="section-title">Objective :-</div>
+                <div class="objective-text">${finalObjective}</div>
 
-    box.querySelector(".confirm-delete").onclick = () => {
-      const entered = normalizeDob(input.value);
-      if(!entered) {
-        error.textContent = "⚠️ Date of Birth enter karein.";
-        return;
-      }
-      if(normalizeDob(expectedDob) !== entered) {
-        error.textContent = "❌ DOB Match nahi hui.";
-        return;
-      }
-      close();
-      onConfirm();
-    };
-  }
+                ${educationList ? `<div class="section-title">Education Qualification :-</div><ul class="resume-ul">${educationList}</ul>` : ''}
+                ${technicalList ? `<div class="section-title">Technical Qualification :-</div><ul class="resume-ul">${technicalList}</ul>` : ''}
+                ${skillsList ? `<div class="section-title">Key Skills & Capabilities :-</div><ul class="resume-ul">${skillsList}</ul>` : ''}
+                ${projectsList ? `<div class="section-title">Projects / Certifications :-</div><ul class="resume-ul">${projectsList}</ul>` : ''}
+                ${experienceList ? `<div class="section-title">Work Experience :-</div><ul class="resume-ul">${experienceList}</ul>` : ''}
+
+                <div class="section-title">Personal Details :-</div>
+                <table class="details-table">
+                    <tr><td>Father’s Name :-</td><td>${data.fatherName || ''}</td></tr>
+                    <tr><td>Mother’s Name :-</td><td>${data.motherName || ''}</td></tr>
+                    <tr><td>Date of Birth / Born :-</td><td>${data.dob || '13 Sep 2006'}</td></tr>
+                    <tr><td>Gender :-</td><td>${data.gender || 'Male'}</td></tr>
+                    <tr><td>Marital Status :-</td><td>${data.maritalStatus || 'un-married'}</td></tr>
+                    <tr><td>Religion :-</td><td>${data.religion || 'Hindu'}</td></tr>
+                    <tr><td>Nationality :-</td><td>${data.nationality || 'Indian'}</td></tr>
+                    <tr><td>Language Known :-</td><td>${data.languages || 'Hindi , English .'}</td></tr>
+                    <tr><td>Interest :-</td><td>${data.interest || 'teaching , reading Books, Accounting.'}</td></tr>
+                </table>
+            </div>
+        `;
+    }
+
+    function closeModal() { document.getElementById('resumeModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+
+    function deleteResume(event, index) {
+        event.stopPropagation();
+        if (confirm("Kya aap is user ka resume delete karna chahte hain?")) {
+            let resumes = JSON.parse(localStorage.getItem('resumesList')) || [];
+            resumes.splice(index, 1);
+            localStorage.setItem('resumesList', JSON.stringify(resumes));
+            renderUserGrid();
+        }
+    }
+
+    function clearAllData() {
+        if (confirm("Kya aap saara data delete karna chahte hain?")) {
+            localStorage.removeItem('resumesList');
+            renderUserGrid();
+        }
+    }
+
+    function downloadDocx() {
+        const content = document.getElementById('printableResume').innerHTML;
+        const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Resume</title></head><body>";
+        const footer = "</body></html>";
+        const sourceHTML = header + content + footer;
+
+        const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+        const fileDownload = document.createElement("a");
+        document.body.appendChild(fileDownload);
+        fileDownload.href = source;
+        fileDownload.download = 'Resume.doc';
+        fileDownload.click();
+        document.body.removeChild(fileDownload);
+    }
+
+    window.onload = renderUserGrid;
 </script>
 </body>
 </html>
