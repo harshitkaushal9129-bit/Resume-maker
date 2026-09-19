@@ -1,4 +1,3 @@
-<!-- data.html -->
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -11,9 +10,10 @@
         :root { --bg-dark: #05050d; --card-bg: rgba(13, 13, 26, 0.95); --neon-cyan: #00f3ff; --neon-pink: #ff007f; --neon-purple: #b000ff; --neon-green: #00ff66; --text-main: #f0f6fc; }
         * { box-sizing: border-box; }
         body { font-family: 'Rajdhani', sans-serif; background-color: var(--bg-dark); background-image: radial-gradient(circle at 80% 20%, rgba(0, 243, 255, 0.12) 0%, transparent 40%), radial-gradient(circle at 20% 80%, rgba(255, 0, 127, 0.12) 0%, transparent 40%); margin: 0; padding: 30px 20px; color: var(--text-main); min-height: 100vh; }
-        .top-bar { max-width: 1000px; margin: 0 auto 30px auto; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar { max-width: 1000px; margin: 0 auto 30px auto; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
         .btn { padding: 12px 22px; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)); color: white; text-decoration: none; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-weight: 700; border: none; cursor: pointer; font-size: 13px; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); text-transform: uppercase; }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(255, 0, 127, 0.8); }
+        .btn-share { background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple)); box-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
         .btn-danger { background: linear-gradient(135deg, #ff0055, #990033); box-shadow: 0 0 15px rgba(255, 0, 85, 0.4); }
         .btn-print { background: linear-gradient(135deg, #00c8ff, #0055ff); }
         .btn-docx { background: linear-gradient(135deg, var(--neon-green), #009933); color: #000; }
@@ -39,79 +39,58 @@
         .details-table { width: 100%; font-size: 13.5px; margin-top: 8px; border-collapse: collapse; }
         .details-table td { padding: 4px 0; vertical-align: top; line-height: 1.4; }
         .details-table td:first-child { width: 180px; font-weight: bold; }
-
         /* 10 DISTINCT LAYOUT STYLES */
-        /* 1. Classic Executive */
         .layout-classic { font-family: 'Georgia', serif; }
         .layout-classic .resume-title { text-align: center; font-size: 26px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 2px solid #000; }
         .layout-classic .header-section { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .layout-classic .header-info { width: 78%; font-size: 14px; line-height: 1.6; }
         .layout-classic .header-info p { margin: 3px 0; }
         .layout-classic .section-title { font-size: 15px; font-weight: bold; text-transform: uppercase; margin-top: 18px; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 3px; letter-spacing: 0.5px; }
-
-        /* 2. Modern Cyber Blue */
         .layout-modern { font-family: 'Rajdhani', sans-serif; color: #0f172a; }
         .layout-modern .resume-title { font-size: 28px; font-weight: 700; color: #0284c7; text-transform: uppercase; margin-bottom: 5px; }
         .layout-modern .header-section { display: flex; justify-content: space-between; border-bottom: 3px solid #0284c7; padding-bottom: 15px; margin-bottom: 20px; }
         .layout-modern .header-info p { margin: 3px 0; font-size: 14px; }
         .layout-modern .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #0284c7; background: #f0f9ff; padding: 6px 10px; border-radius: 4px; margin-top: 18px; margin-bottom: 10px; }
-
-        /* 3. Dark Header Premium */
         .layout-darkaccent { font-family: 'Rajdhani', sans-serif; color: #0f172a; }
         .layout-darkaccent .header-section { background: #0f172a; color: #fff; padding: 25px; margin: -45px -50px 25px -50px; display: flex; justify-content: space-between; align-items: center; }
         .layout-darkaccent .resume-title { font-size: 26px; font-weight: 700; color: #38bdf8; text-transform: uppercase; }
         .layout-darkaccent .header-info p { margin: 3px 0; font-size: 14px; }
         .layout-darkaccent .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #0f172a; border-left: 4px solid #0284c7; padding-left: 10px; margin-top: 20px; margin-bottom: 10px; }
-
-        /* 4. Elegant Emerald */
         .layout-emerald { font-family: 'Merriweather', serif; color: #1e293b; }
         .layout-emerald .resume-title { font-size: 27px; font-weight: 700; color: #047857; text-align: center; margin-bottom: 8px; }
         .layout-emerald .header-section { display: flex; justify-content: space-between; border-bottom: 2px dashed #047857; padding-bottom: 15px; margin-bottom: 20px; }
         .layout-emerald .header-info p { margin: 3px 0; font-size: 13.5px; }
         .layout-emerald .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #047857; border-bottom: 1px solid #a7f3d0; padding-bottom: 4px; margin-top: 18px; margin-bottom: 8px; }
-
-        /* 5. Minimalist Charcoal */
         .layout-minimal { font-family: 'Roboto', sans-serif; color: #334155; }
         .layout-minimal .resume-title { font-size: 26px; font-weight: 700; color: #0f172a; letter-spacing: 1px; }
         .layout-minimal .header-section { display: flex; justify-content: space-between; border-bottom: 1px solid #cbd5e1; padding-bottom: 12px; margin-bottom: 18px; }
         .layout-minimal .header-info p { margin: 2px 0; font-size: 13.5px; }
         .layout-minimal .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #475569; letter-spacing: 1px; margin-top: 16px; margin-bottom: 6px; }
-
-        /* 6. Crimson Royal */
         .layout-crimson { font-family: 'Georgia', serif; color: #27272a; }
         .layout-crimson .resume-title { font-size: 28px; font-weight: 700; color: #991b1b; text-transform: uppercase; border-bottom: 3px double #991b1b; padding-bottom: 6px; margin-bottom: 15px; }
         .layout-crimson .header-section { display: flex; justify-content: space-between; margin-bottom: 20px; }
         .layout-crimson .header-info p { margin: 3px 0; font-size: 14px; }
         .layout-crimson .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #991b1b; border-bottom: 1px solid #fca5a5; padding-bottom: 3px; margin-top: 18px; margin-bottom: 8px; }
-
-        /* 7. Golden Luxury */
         .layout-golden { font-family: 'Cinzel', serif; color: #1c1917; }
         .layout-golden .resume-title { font-size: 26px; font-weight: 700; color: #854d0e; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
         .layout-golden .header-section { display: flex; justify-content: space-between; border-top: 2px solid #ca8a04; border-bottom: 2px solid #ca8a04; padding: 12px 0; margin: 15px 0 20px 0; }
         .layout-golden .header-info p { margin: 3px 0; font-size: 13.5px; font-family: 'Georgia', serif; }
         .layout-golden .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #854d0e; border-bottom: 1px solid #fef08a; padding-bottom: 3px; margin-top: 18px; margin-bottom: 8px; letter-spacing: 1px; }
-
-        /* 8. Tech Indigo */
         .layout-indigo { font-family: 'Rajdhani', sans-serif; color: #1e1b4b; }
         .layout-indigo .resume-title { font-size: 28px; font-weight: 700; color: #3730a3; text-transform: uppercase; }
         .layout-indigo .header-section { display: flex; justify-content: space-between; background: #e0e7ff; padding: 18px; border-radius: 8px; margin-bottom: 20px; }
         .layout-indigo .header-info p { margin: 3px 0; font-size: 14px; }
         .layout-indigo .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #3730a3; border-bottom: 2px solid #6366f1; padding-bottom: 4px; margin-top: 18px; margin-bottom: 8px; }
-
-        /* 9. Clean Slate */
         .layout-slate { font-family: 'Roboto', sans-serif; color: #0f172a; }
         .layout-slate .resume-title { font-size: 26px; font-weight: 700; color: #334155; border-left: 6px solid #475569; padding-left: 12px; margin-bottom: 15px; }
         .layout-slate .header-section { display: flex; justify-content: space-between; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px; }
         .layout-slate .header-info p { margin: 3px 0; font-size: 13.5px; }
         .layout-slate .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #334155; background: #f1f5f9; padding: 5px 8px; margin-top: 18px; margin-bottom: 8px; }
-
-        /* 10. Coral Creative */
         .layout-coral { font-family: 'Rajdhani', sans-serif; color: #27272a; }
         .layout-coral .resume-title { font-size: 28px; font-weight: 700; color: #e11d48; text-transform: uppercase; }
         .layout-coral .header-section { display: flex; justify-content: space-between; border-bottom: 3px solid #f43f5e; padding-bottom: 12px; margin-bottom: 20px; }
         .layout-coral .header-info p { margin: 3px 0; font-size: 14px; }
         .layout-coral .section-title { font-size: 15px; font-weight: 700; text-transform: uppercase; color: #e11d48; border-bottom: 1px dashed #fda4af; padding-bottom: 3px; margin-top: 18px; margin-bottom: 8px; }
-
         @media print {
             @page { size: A4; margin: 0; }
             body { background: #fff !important; padding: 0 !important; margin: 0 !important; }
@@ -122,14 +101,12 @@
     </style>
 </head>
 <body>
-
 <div class="top-bar">
     <a href="index.html" class="btn">+ Create New Resume</a>
+    <button onclick="shareApp()" class="btn btn-share">🔗 Share Vault</button>
     <button onclick="clearAllData()" class="btn btn-danger">Clear Vault Data</button>
 </div>
-
 <div class="users-grid" id="usersGrid"></div>
-
 <div class="modal-overlay" id="resumeModal">
     <div class="modal-action-bar">
         <div class="layout-selector">
@@ -156,15 +133,36 @@
     <div id="modalResumeContent"></div>
 </div>
 
+<!-- Dedicated Service Worker Script Block -->
 <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed: ', err));
+            navigator.serviceWorker.register('sw.js').catch(err => console.error('SW Registration Failed:', err));
         });
     }
+</script>
 
+<!-- Main App Functionality Script Block -->
+<script>
     let activeIndex = null;
     const DEFAULT_OBJECTIVE = "To work in a progressive organization where I can put my effort at the level of my best and enhance my skills and knowledge and achieve high career growth through a continuous learning process and looking for a dynamic and vibrant work.";
+
+    function shareApp() {
+        const shareData = {
+            title: 'Neon Resumes Vault',
+            text: 'Apna professional resume aasaani se banayein aur manage karein Neon Resumes Vault se!',
+            url: window.location.href
+        };
+        if (navigator.share) {
+            navigator.share(shareData).catch(err => console.log('Share error:', err));
+        } else {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('App Link Clipboard par copy ho gaya hai!');
+            }).catch(() => {
+                alert('Link copy nahi ho paya, kripya URL bar se copy karein.');
+            });
+        }
+    }
 
     function renderListItems(strData) {
         if (!strData) return '';
